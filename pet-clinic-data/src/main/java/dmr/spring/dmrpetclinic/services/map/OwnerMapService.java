@@ -1,11 +1,11 @@
 package dmr.spring.dmrpetclinic.services.map;
 
 import dmr.spring.dmrpetclinic.model.Owner;
-import dmr.spring.dmrpetclinic.services.CrudService;
+import dmr.spring.dmrpetclinic.services.OwnerService;
 
 import java.util.Set;
 
-public class OwnerMapService extends AbstractMapService<Owner, Long> implements CrudService<Owner, Long> {
+public class OwnerMapService extends AbstractMapService<Owner, Long> implements OwnerService {
     @Override
     public Set<Owner> findAll() {
         return super.findAll();
@@ -25,6 +25,11 @@ public class OwnerMapService extends AbstractMapService<Owner, Long> implements 
     public void delete(Owner object) {
         super.delete(object);
 
+    }
+
+    @Override
+    public Owner findByLastName(String lastName) {
+        return null;
     }
 
     @Override

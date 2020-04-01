@@ -2,10 +2,11 @@ package dmr.spring.dmrpetclinic.services.map;
 
 import dmr.spring.dmrpetclinic.model.Vet;
 import dmr.spring.dmrpetclinic.services.CrudService;
+import dmr.spring.dmrpetclinic.services.VetService;
 
 import java.util.Set;
 
-public class VetMapService extends AbstractMapService<Vet, Long> implements CrudService<Vet, Long> {
+public class VetMapService extends AbstractMapService<Vet, Long> implements VetService {
     @Override
     public Set<Vet> findAll() {
         return super.findAll();
