@@ -2,12 +2,16 @@ package dmr.spring.dmrpetclinic.services.map;
 
 import dmr.spring.dmrpetclinic.model.Owner;
 import dmr.spring.dmrpetclinic.services.OwnerService;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+@Service
 public class OwnerMapService extends AbstractMapService<Owner, Long> implements OwnerService {
     @Override
     public Set<Owner> findAll() {
+
         return super.findAll();
     }
 
