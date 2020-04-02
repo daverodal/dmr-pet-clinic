@@ -27,12 +27,10 @@ public class DataLoader implements CommandLineRunner {
     public void run(String... args) throws Exception {
         System.out.println("Runninn!");
         Owner owner = new Owner();
-        owner.setId(1L);
         owner.setFirstName("David");
         owner.setLastName("Rodal");
         ownerService.save(owner);
          owner = new Owner();
-        owner.setId(2L);
         owner.setFirstName("Bruce");
         owner.setLastName("TheGoose");
         ownerService.save(owner);
