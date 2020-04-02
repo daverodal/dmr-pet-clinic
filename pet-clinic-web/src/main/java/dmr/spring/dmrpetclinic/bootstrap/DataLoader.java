@@ -1,14 +1,10 @@
 package dmr.spring.dmrpetclinic.bootstrap;
 
-import dmr.spring.dmrpetclinic.model.Owner;
-import dmr.spring.dmrpetclinic.model.Pet;
-import dmr.spring.dmrpetclinic.model.PetType;
-import dmr.spring.dmrpetclinic.model.Vet;
+import dmr.spring.dmrpetclinic.model.*;
 import dmr.spring.dmrpetclinic.services.OwnerService;
 import dmr.spring.dmrpetclinic.services.PetTypeService;
+import dmr.spring.dmrpetclinic.services.SpecialityService;
 import dmr.spring.dmrpetclinic.services.VetService;
-import dmr.spring.dmrpetclinic.services.map.OwnerMapService;
-import dmr.spring.dmrpetclinic.services.map.VetMapService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -21,15 +17,27 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialityService specialityService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialityService = specialityService;
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+
+        int count = petTypeService.findAll().size();
+        if(count == 0){
+            loadData();
+        }
+
+    }
+
+    private void loadData() {
         PetType cat = new PetType();
         cat.setName("cat");
         PetType savedCatPetType = petTypeService.save(cat);
@@ -51,7 +59,7 @@ public class DataLoader implements CommandLineRunner {
         davesPet.setOwner(owner);
         davesPet.setName("Louis");
         davesPet.setBirthDate(LocalDate.now());
-         owner = new Owner();
+        owner = new Owner();
         owner.setFirstName("Bruce");
         owner.setLastName("TheGoose");
         owner.setLastName("Rodal");
@@ -66,14 +74,34 @@ public class DataLoader implements CommandLineRunner {
         Set<Owner> owners = ownerService.findAll();
 
 
-
         Vet v1 = new Vet();
-        v1.setId(1L);
         v1.setFirstName("Doctor");
         v1.setLastName("Petkill");
 
-        vetService.save(v1);
-        System.out.println("Done Runnin'");
+        Speciality killingPetsSpeciality = new Speciality();
+        killingPetsSpeciality.setDescription("Killing pets");
+        killingPetsSpeciality = specialityService.save(killingPetsSpeciality);
 
+        Speciality hurtingPetsSpeciality = new Speciality();
+        hurtingPetsSpeciality.setDescription("Hurting pets");
+        hurtingPetsSpeciality = specialityService.save(hurtingPetsSpeciality);
+
+        Speciality makingPetsCry = new Speciality();
+        makingPetsCry.setDescription("Making pets cry");
+        makingPetsCry = specialityService.save(makingPetsCry);
+
+        killingPetsSpeciality.setDescription("Hurting pets");
+        killingPetsSpeciality.setDescription("Making pets Cry");
+
+        v1.getSpecialities().add(killingPetsSpeciality);
+        vetService.save(v1);
+
+        v1 = new Vet();
+        v1.setFirstName("Doctor");
+        v1.setLastName("Petcry");
+        v1.getSpecialities().add(makingPetsCry);
+        vetService.save(v1);
+
+        System.out.println("Done Runnin'");
     }
 }
